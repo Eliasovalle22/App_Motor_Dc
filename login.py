@@ -1,6 +1,8 @@
 import sys
 import bcrypt
 import mysql.connector
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout,
     QMessageBox, QMainWindow
@@ -22,8 +24,15 @@ class Login(QWidget):
         super().__init__()
 
         self.setWindowTitle("Login - Mi App")
-        self.setGeometry(200, 200, 300, 150)
+        self.setGeometry(200, 200, 300, 250)
 
+        # Logo
+        self.logo_label = QLabel()
+        pixmap = QPixmap("img/logo.png")
+        pixmap = pixmap.scaled(80, 80, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        self.logo_label.setPixmap(pixmap)
+        self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
         # Widgets
         self.label_user = QLabel("Usuario:")
         self.input_user = QLineEdit()
@@ -37,6 +46,7 @@ class Login(QWidget):
 
         # Layout
         layout = QVBoxLayout()
+        layout.addWidget(self.logo_label)
         layout.addWidget(self.label_user)
         layout.addWidget(self.input_user)
         layout.addWidget(self.label_pass)
@@ -82,7 +92,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # Cargar CSS
-    with open("estilos.qss", "r") as archivo:
+    with open("styles/estilos.qss", "r") as archivo:
         app.setStyleSheet(archivo.read())
         
     ventana = Login()
