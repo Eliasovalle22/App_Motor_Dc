@@ -4,8 +4,8 @@ import mysql.connector
 conexion = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="root",
-    database="app_motor"
+    password="2805",
+    database="db_motor"
 )
 cursor = conexion.cursor()
 
