@@ -9,16 +9,16 @@ from PyQt6.QtWidgets import (
     QMessageBox, QMainWindow
 )
 
-# -------- Ventana principal (Control motor) --------
+# -------- Ventana principal (Control motor y LEDs) --------
 class VentanaPrincipal(QMainWindow):
     def __init__(self, usuario):
         super().__init__()
-        self.setWindowTitle("Control del Motor DC")
-        self.setGeometry(250, 250, 400, 300)
+        self.setWindowTitle("Control del Motor DC y LEDs")
+        self.setGeometry(250, 250, 400, 400)
 
         # Conexión con Arduino/ESP32
         try:
-            self.arduino = serial.Serial("COM3", 9600)  # ⚠️ Cambia COM3 por tu puerto
+            self.arduino = serial.Serial("COM3", 9600)  # ⚠️ Cambia COM3 por tu puerto real
         except Exception as e:
             QMessageBox.critical(self, "Error", f"No se pudo conectar al puerto serie: {e}")
             self.arduino = None
@@ -27,12 +27,25 @@ class VentanaPrincipal(QMainWindow):
         self.label_bienvenida = QLabel(f"Bienvenido, {usuario}")
         self.label_estado = QLabel("Estado del motor: Apagado")
 
+        # Botones Motor
         self.boton_on = QPushButton("Encender motor")
         self.boton_off = QPushButton("Apagar motor")
+
+        # Botones LED Verde
+        self.boton_led_verde_on = QPushButton("Encender LED Verde")
+        self.boton_led_verde_off = QPushButton("Apagar LED Verde")
+
+        # Botones LED Rojo
+        self.boton_led_rojo_on = QPushButton("Encender LED Rojo")
+        self.boton_led_rojo_off = QPushButton("Apagar LED Rojo")
 
         # Eventos
         self.boton_on.clicked.connect(self.encender_motor)
         self.boton_off.clicked.connect(self.apagar_motor)
+        self.boton_led_verde_on.clicked.connect(self.encender_led_verde)
+        self.boton_led_verde_off.clicked.connect(self.apagar_led_verde)
+        self.boton_led_rojo_on.clicked.connect(self.encender_led_rojo)
+        self.boton_led_rojo_off.clicked.connect(self.apagar_led_rojo)
 
         # Layout
         central = QWidget()
@@ -41,9 +54,14 @@ class VentanaPrincipal(QMainWindow):
         layout.addWidget(self.label_estado)
         layout.addWidget(self.boton_on)
         layout.addWidget(self.boton_off)
+        layout.addWidget(self.boton_led_verde_on)
+        layout.addWidget(self.boton_led_verde_off)
+        layout.addWidget(self.boton_led_rojo_on)
+        layout.addWidget(self.boton_led_rojo_off)
         central.setLayout(layout)
         self.setCentralWidget(central)
 
+    # ---------- Comandos Motor ----------
     def encender_motor(self):
         if self.arduino:
             self.arduino.write(b"ON\n")
@@ -53,6 +71,24 @@ class VentanaPrincipal(QMainWindow):
         if self.arduino:
             self.arduino.write(b"OFF\n")
         self.label_estado.setText("Estado del motor: Apagado")
+
+    # ---------- Comandos LED Verde ----------
+    def encender_led_verde(self):
+        if self.arduino:
+            self.arduino.write(b"LED_VERDE_ON\n")
+
+    def apagar_led_verde(self):
+        if self.arduino:
+            self.arduino.write(b"LED_VERDE_OFF\n")
+
+    # ---------- Comandos LED Rojo ----------
+    def encender_led_rojo(self):
+        if self.arduino:
+            self.arduino.write(b"LED_ROJO_ON\n")
+
+    def apagar_led_rojo(self):
+        if self.arduino:
+            self.arduino.write(b"LED_ROJO_OFF\n")
 
 
 # -------- Ventana de login --------
@@ -100,7 +136,7 @@ class Login(QWidget):
             conexion = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="2805",     # 
+                password="qwerty78963*",  # ⚠️ Ajusta a tu clave de MySQL
                 database="db_motor"
             )
             cursor = conexion.cursor()

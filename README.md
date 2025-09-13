@@ -1,7 +1,7 @@
 # Motor Dc
 
 - Instalación de librerias, creación de entorno virtual y activación.
-   
+
    ```bash
         python -m venv venv                  # Crear entorno virtual
         venv\Scripts\Activate                 # Activación entorno virtual
@@ -11,5 +11,4 @@
 
 - Login
 
-<img width="340" height="317" alt="image" src="https://github.com/user-attachments/assets/93cf3b48-252d-4879-9ff9-a25953457484" />
-
+    <img width="340" height="317" alt="image" src="https://github.com/user-attachments/assets/93cf3b48-252d-4879-9ff9-a25953457484" />
