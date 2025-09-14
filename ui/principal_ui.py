@@ -2,6 +2,8 @@ from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButt
 from ui.historial_ui import VentanaHistorial
 from services.motor_service import MotorService
 from services.led_service import LedService
+from services.serial_listener_service import SerialListener
+
 
 
 class VentanaPrincipal(QMainWindow):
@@ -16,6 +18,11 @@ class VentanaPrincipal(QMainWindow):
         # Instanciar servicios
         self.motor_service = MotorService()
         self.led_service = LedService(self.motor_service.arduino)
+
+        # Hilo para escuchar mensajes desde el ESP32 (botones físicos)
+        if self.motor_service.arduino:
+            self.serial_listener = SerialListener(self.motor_service.arduino, self, self.usuario_id)
+            self.serial_listener.start()
 
         # Widgets
         self.label_bienvenida = QLabel(f"Bienvenido, {usuario}")
