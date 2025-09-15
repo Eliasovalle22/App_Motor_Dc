@@ -9,7 +9,7 @@ DB_CONFIG = {
     "charset": "utf8mb4",
     "cursorclass": pymysql.cursors.DictCursor,
     "ssl": {"ssl": {}},
-    "connect_timeout": 10
+    "connect_timeout": 30
 }
 
 def get_connection():

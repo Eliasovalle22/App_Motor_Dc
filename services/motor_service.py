@@ -3,7 +3,9 @@ from models.accion_model import Accion
 
 
 class MotorService:
-    def __init__(self, port="COM5", baudrate=9600):
+    def __init__(self,
+                port="COM3", # Ajustar al puerto según Arduino
+                baudrate=9600):
         try:
             self.arduino = serial.Serial(port, baudrate)
         except Exception as e:
