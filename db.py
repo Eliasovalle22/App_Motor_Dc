@@ -3,7 +3,7 @@ import pymysql
 DB_CONFIG = {
     "host": "sistema-control-123-sistemadecontrol123.i.aivencloud.com",
     "user": "avnadmin",
-    "password": "AVNS_jsj8Y-PONkd7ByvybgA",
+    "password": "AVNS_OHpXdLOCWg3oB4AvSbA",
     "database": "defaultdb",
     "port": 14718,
     "charset": "utf8mb4",
